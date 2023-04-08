@@ -8,13 +8,52 @@
     <title>Random cats</title>
   </head>
   <body>
-    <h1>Random cats</h1>
-    <img id="img1" alt="Cat photo" class="img-photo" />
-    <img id="img2" alt="Cat photo" class="img-photo" />
-    <img id="img3" alt="Cat photo" class="img-photo" />
-    <div class="container">
-      <button onclick="randomCat()" class="button-photo">CHANGE CAT</button>
-    </div>
+    <section id="randomCats">
+      <h1>Random cats</h1>
+
+      <article>
+        <img id="img1" alt="Cat photo" class="img-photo" />
+        <div class="container">
+          <button onclick="randomCat()" class="button-photo">
+            Add to favorites
+          </button>
+        </div>
+      </article>
+
+      <article>
+        <img id="img2" alt="Cat photo" class="img-photo" />
+        <div class="container">
+          <button onclick="randomCat()" class="button-photo">
+            Add to favorites
+          </button>
+        </div>
+      </article>
+
+      <article>
+        <img id="img3" alt="Cat photo" class="img-photo" />
+        <div class="container">
+          <button onclick="randomCat()" class="button-photo">
+            Add to favorites
+          </button>
+        </div>
+      </article>
+
+      <div class="container">
+        <button onclick="randomCat()" class="button-photo">CHANGE CAT</button>
+      </div>
+    </section>
+
+    <section id="favoriteesCats">
+        <h1>Favorite cats</h1>
+        <article>
+            <img id="img1" alt="Cat photo" class="img-photo" />
+            <div class="container">
+              <button onclick="randomCat()" class="button-photo">
+                Remove to favorites
+              </button>
+            </div>
+          </article>
+    </section>
 
     <script src="./main.js"></script>
   </body>
