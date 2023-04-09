@@ -11,10 +11,12 @@
     <section id="randomCats">
       <h1>Random cats</h1>
 
+      <span id="error" style="color: white"></span>
+
       <article>
         <img id="img1" alt="Cat photo" class="img-photo" />
         <div class="container">
-          <button onclick="randomCat()" class="button-photo">
+          <button id="btn1" onclick="saveFavoriteCats()" class="button-photo">
             Add to favorites
           </button>
         </div>
@@ -23,7 +25,7 @@
       <article>
         <img id="img2" alt="Cat photo" class="img-photo" />
         <div class="container">
-          <button onclick="randomCat()" class="button-photo">
+          <button id="btn2" onclick="saveFavoriteCats()" class="button-photo">
             Add to favorites
           </button>
         </div>
@@ -32,27 +34,27 @@
       <article>
         <img id="img3" alt="Cat photo" class="img-photo" />
         <div class="container">
-          <button onclick="randomCat()" class="button-photo">
+          <button id="btn3" onclick="saveFavoriteCats()" class="button-photo">
             Add to favorites
           </button>
         </div>
       </article>
 
       <div class="container">
-        <button onclick="randomCat()" class="button-photo">CHANGE CAT</button>
+        <button onclick="reloadApp()" class="button-photo">CHANGE CATS</button>
       </div>
     </section>
 
     <section id="favoriteesCats">
-        <h1>Favorite cats</h1>
-        <article>
-            <img id="img1" alt="Cat photo" class="img-photo" />
-            <div class="container">
-              <button onclick="randomCat()" class="button-photo">
-                Remove to favorites
-              </button>
-            </div>
-          </article>
+      <h1>Favorite cats</h1>
+      <article>
+        <img id="img1" alt="Cat photo" class="img-photo" />
+        <div class="container">
+          <button onclick="randomCat()" class="button-photo">
+            Remove to favorites
+          </button>
+        </div>
+      </article>
     </section>
 
     <script src="./main.js"></script>
