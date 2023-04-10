@@ -4,6 +4,9 @@ const API_URL_RANDOM =
 const API_URL_FAVORITES =
   "https://api.thecatapi.com/v1/favourites?&api_key=live_3HtJzwaOwPebbHgkty8tBfHw7SUqRqOjtoOciTWhWTmWRP0C6sspe1c7XbFwewdw";
 
+const API_URL_FAVORITES_DELETE = (id) =>
+  `https://api.thecatapi.com/v1/favourites/${id}?&api_key=live_3HtJzwaOwPebbHgkty8tBfHw7SUqRqOjtoOciTWhWTmWRP0C6sspe1c7XbFwewdw`;
+
 const spanError = document.getElementById("error");
 
 async function getRandomCats() {
@@ -20,9 +23,17 @@ async function getRandomCats() {
       const img1 = document.getElementById("img1");
       const img2 = document.getElementById("img2");
       const img3 = document.getElementById("img3");
+      const btn1 = document.getElementById("btn1");
+      const btn2 = document.getElementById("btn2");
+      const btn3 = document.getElementById("btn3");
+
       img1.src = data[0].url;
       img2.src = data[1].url;
       img3.src = data[2].url;
+
+      btn1.onclick = () => saveFavoriteCat(data[0].id);
+      btn2.onclick = () => saveFavoriteCat(data[1].id);
+      btn3.onclick = () => saveFavoriteCat(data[2].id);
     }
   } catch (error) {
     console.log(error);
@@ -44,6 +55,27 @@ async function getFavoriteCats() {
 
     if (res.status != 200) {
       spanError.innerHTML = "There was a mistake: " + res.status + data.message;
+    } else {
+      data.forEach((kitten) => {
+        const section = document.getElementById("favoritesCats");
+        const article = document.createElement("article");
+        const img = document.createElement("img");
+        const btn = document.createElement("button");
+        const btnText = document.createTextNode("Remove to favorites");
+        const container = document.createElement("div");
+
+        img.src = kitten.image.url;
+        img.classList.add("img-photo");
+        btn.appendChild(btnText);
+        btn.classList.add("button-photo");
+        btn.onclick = () => deleteFavoriteCat(kitten.id);
+        container.classList.add("container");
+
+        article.appendChild(img);
+        container.appendChild(btn);
+        article.appendChild(container);
+        section.appendChild(article);
+      });
     }
   } catch (error) {
     console.log(error);
@@ -51,14 +83,14 @@ async function getFavoriteCats() {
 }
 getFavoriteCats();
 
-async function saveFavoriteCats() {
+async function saveFavoriteCat(id) {
   const res = await fetch(API_URL_FAVORITES, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      image_id: "MTUwMDE5MA",
+      image_id: id,
     }),
   });
   const data = await res.json();
@@ -68,5 +100,22 @@ async function saveFavoriteCats() {
 
   if (res.status != 200) {
     spanError.innerHTML = "There was a mistake: " + res.status;
+  }else{
+    console.log("Saved cat");
+    reloadApp();
+  }
+}
+
+async function deleteFavoriteCat(id) {
+  const res = await fetch(API_URL_FAVORITES_DELETE(id), {
+    method: "DELETE",
+  });
+  const data = await res.json();
+
+  if (res.status != 200) {
+    spanError.innerHTML = "There was a mistake: " + res.status;
+  }else{
+    console.log("Removed cat");
+    reloadApp();
   }
 }
