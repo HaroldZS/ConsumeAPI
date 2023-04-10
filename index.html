@@ -16,33 +16,38 @@
       <article>
         <img id="img1" alt="Cat photo" class="img-photo" />
         <div class="container">
-          <button id="btn1" class="button-photo">
-            Add to favorites
-          </button>
+          <button id="btn1" class="button-photo">Add to favorites</button>
         </div>
       </article>
 
       <article>
         <img id="img2" alt="Cat photo" class="img-photo" />
         <div class="container">
-          <button id="btn2" class="button-photo">
-            Add to favorites
-          </button>
+          <button id="btn2" class="button-photo">Add to favorites</button>
         </div>
       </article>
 
       <article>
         <img id="img3" alt="Cat photo" class="img-photo" />
         <div class="container">
-          <button id="btn3" class="button-photo">
-            Add to favorites
-          </button>
+          <button id="btn3" class="button-photo">Add to favorites</button>
         </div>
       </article>
 
       <div class="container">
         <button onclick="reloadApp()" class="button-photo">CHANGE CATS</button>
       </div>
+    </section>
+
+    <section id="uploadingCat">
+      
+        <h1>Upload a new cat</h1>
+        <div class="container">
+        <form id="uploadingForm">
+          <input id="file" type="file" name="file" />
+          <button type="button" onclick="uploadCatPhoto()">Upload</button>
+        </form>
+      </div>  
     </section>
 
     <section id="favoritesCats">

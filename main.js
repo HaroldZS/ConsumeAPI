@@ -1,17 +1,23 @@
-const API_URL_RANDOM =
-  "https://api.thecatapi.com/v1/images/search?limit=3&api_key=live_3HtJzwaOwPebbHgkty8tBfHw7SUqRqOjtoOciTWhWTmWRP0C6sspe1c7XbFwewdw";
+const API_URL_RANDOM = "https://api.thecatapi.com/v1/images/search?limit=3";
 
-const API_URL_FAVORITES =
-  "https://api.thecatapi.com/v1/favourites?&api_key=live_3HtJzwaOwPebbHgkty8tBfHw7SUqRqOjtoOciTWhWTmWRP0C6sspe1c7XbFwewdw";
+const API_URL_FAVORITES = "https://api.thecatapi.com/v1/favourites";
 
 const API_URL_FAVORITES_DELETE = (id) =>
-  `https://api.thecatapi.com/v1/favourites/${id}?&api_key=live_3HtJzwaOwPebbHgkty8tBfHw7SUqRqOjtoOciTWhWTmWRP0C6sspe1c7XbFwewdw`;
+  `https://api.thecatapi.com/v1/favourites/${id}`;
+
+const API_URL_UPLOAD = "https://api.thecatapi.com/v1/images/upload";
 
 const spanError = document.getElementById("error");
 
 async function getRandomCats() {
   try {
-    const res = await fetch(API_URL_RANDOM);
+    const res = await fetch(API_URL_RANDOM, {
+      method: "GET",
+      headers: {
+        "X-API-KEY":
+          "live_3HtJzwaOwPebbHgkty8tBfHw7SUqRqOjtoOciTWhWTmWRP0C6sspe1c7XbFwewdw",
+      },
+    });
     const data = await res.json();
 
     console.log("Random");
@@ -47,7 +53,13 @@ function reloadApp() {
 
 async function getFavoriteCats() {
   try {
-    const res = await fetch(API_URL_FAVORITES);
+    const res = await fetch(API_URL_FAVORITES, {
+      method: "GET",
+      headers: {
+        "X-API-KEY":
+          "live_3HtJzwaOwPebbHgkty8tBfHw7SUqRqOjtoOciTWhWTmWRP0C6sspe1c7XbFwewdw",
+      },
+    });
     const data = await res.json();
 
     console.log("Favorite");
@@ -88,6 +100,8 @@ async function saveFavoriteCat(id) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-API-KEY":
+        "live_3HtJzwaOwPebbHgkty8tBfHw7SUqRqOjtoOciTWhWTmWRP0C6sspe1c7XbFwewdw",
     },
     body: JSON.stringify({
       image_id: id,
@@ -100,7 +114,7 @@ async function saveFavoriteCat(id) {
 
   if (res.status != 200) {
     spanError.innerHTML = "There was a mistake: " + res.status;
-  }else{
+  } else {
     console.log("Saved cat");
     reloadApp();
   }
@@ -109,13 +123,42 @@ async function saveFavoriteCat(id) {
 async function deleteFavoriteCat(id) {
   const res = await fetch(API_URL_FAVORITES_DELETE(id), {
     method: "DELETE",
+    headers: {
+      "X-API-KEY":
+        "live_3HtJzwaOwPebbHgkty8tBfHw7SUqRqOjtoOciTWhWTmWRP0C6sspe1c7XbFwewdw",
+    },
   });
   const data = await res.json();
 
   if (res.status != 200) {
     spanError.innerHTML = "There was a mistake: " + res.status;
-  }else{
+  } else {
     console.log("Removed cat");
     reloadApp();
+  }
+}
+
+async function uploadCatPhoto() {
+  const form = document.getElementById("uploadingForm");
+  const formData = new FormData(form);
+
+  console.log(formData.get("file"));
+  const res = await fetch(API_URL_UPLOAD, {
+    method: "POST",
+    headers: {
+      "X-API-KEY":
+        "live_3HtJzwaOwPebbHgkty8tBfHw7SUqRqOjtoOciTWhWTmWRP0C6sspe1c7XbFwewdw",
+    },
+    body: formData,
+  });
+  const data = await res.json();
+
+  if (res.status !== 201) {
+    spanError.innerHTML = `Hubo un error al subir michi: ${res.status} ${data.message}`;
+  } else {
+    console.log("Foto de michi cargada :)");
+    console.log({ data });
+    console.log(data.url);
+    saveFavoriteCat(data.id);
   }
 }
